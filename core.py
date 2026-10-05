@@ -1,22 +1,36 @@
 # core.py
 import pyrogram.errors
 import pyrogram.raw.types
+import pyrogram.raw.functions.phone
 
 # --- MONKEY PATCH: Pyrogram + PyTgCalls Compatibility Fix ---
-# Yeh patch pytgcalls ko chlane ke liye zaroori hai
+# 1. Fix GroupcallForbidden
 if not hasattr(pyrogram.errors, "GroupcallForbidden"):
     pyrogram.errors.GroupcallForbidden = type("GroupcallForbidden", (Exception,), {})
 if not hasattr(pyrogram.errors, "GroupcallInvalid"):
     pyrogram.errors.GroupcallInvalid = type("GroupcallInvalid", (Exception,), {})
+
+# 2. Fix Raw Types
 if not hasattr(pyrogram.raw.types, "InputGroupCallSlug"):
     class InputGroupCallSlug:
         def __init__(self, slug=None):
             self.slug = slug
     pyrogram.raw.types.InputGroupCallSlug = InputGroupCallSlug
+
 if not hasattr(pyrogram.raw.types, "PhoneCallDiscardReasonMigrateConferenceCall"):
     class PhoneCallDiscardReasonMigrateConferenceCall:
         pass
     pyrogram.raw.types.PhoneCallDiscardReasonMigrateConferenceCall = PhoneCallDiscardReasonMigrateConferenceCall
+
+# 3. Fix CreateConferenceCall (Yeh naya fix hai)
+if not hasattr(pyrogram.raw.functions.phone, "CreateConferenceCall"):
+    class CreateConferenceCall:
+        def __init__(self, call=None, join_as=None, invite_hash=None, public_key=None):
+            self.call = call
+            self.join_as = join_as
+            self.invite_hash = invite_hash
+            self.public_key = public_key
+    pyrogram.raw.functions.phone.CreateConferenceCall = CreateConferenceCall
 # --- END MONKEY PATCH ---
 
 from pyrogram import Client
