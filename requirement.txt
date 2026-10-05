@@ -1,8 +1,0 @@
-pyrogram
-TgCrypto
-py-tgcalls
-yt-dlp
-flask
-python-dotenv
-motor
-
