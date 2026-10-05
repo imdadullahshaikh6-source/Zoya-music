@@ -22,7 +22,7 @@ if not hasattr(pyrogram.raw.types, "PhoneCallDiscardReasonMigrateConferenceCall"
         pass
     pyrogram.raw.types.PhoneCallDiscardReasonMigrateConferenceCall = PhoneCallDiscardReasonMigrateConferenceCall
 
-# 3. Fix CreateConferenceCall (Yeh naya fix hai)
+# 3. Fix CreateConferenceCall
 if not hasattr(pyrogram.raw.functions.phone, "CreateConferenceCall"):
     class CreateConferenceCall:
         def __init__(self, call=None, join_as=None, invite_hash=None, public_key=None):
@@ -31,6 +31,16 @@ if not hasattr(pyrogram.raw.functions.phone, "CreateConferenceCall"):
             self.invite_hash = invite_hash
             self.public_key = public_key
     pyrogram.raw.functions.phone.CreateConferenceCall = CreateConferenceCall
+
+# 4. Fix GetGroupCallChainBlocks (Yeh naya fix hai)
+if not hasattr(pyrogram.raw.functions.phone, "GetGroupCallChainBlocks"):
+    class GetGroupCallChainBlocks:
+        def __init__(self, call=None, sub_peer=None, offset=0, limit=1000):
+            self.call = call
+            self.sub_peer = sub_peer
+            self.offset = offset
+            self.limit = limit
+    pyrogram.raw.functions.phone.GetGroupCallChainBlocks = GetGroupCallChainBlocks
 # --- END MONKEY PATCH ---
 
 from pyrogram import Client
