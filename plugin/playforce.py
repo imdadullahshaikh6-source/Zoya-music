@@ -1,7 +1,8 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pytgcalls.types import MediaStream
-from main import call_py, userbot
+# ✅ CHANGED: main ki jagah core se import kiya
+from core import call_py, userbot
 from plugins.play import get_stream_url
 
 @Client.on_message(filters.command(["playforce", "vplayforce"]) & filters.group)
