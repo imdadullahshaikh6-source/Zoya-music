@@ -3,7 +3,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ChatMemberBanned
 from pyrogram.errors import UserNotParticipant
 from pytgcalls.types import MediaStream
-from main import call_py, userbot
+# ✅ CHANGED: main ki jagah core se import kiya
+from core import call_py, userbot
 
 # --- Helper: Extract Stream URL ---
 def get_stream_url(query: str):
