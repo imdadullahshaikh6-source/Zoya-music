@@ -2,7 +2,7 @@ pyrogram
 TgCrypto
 py-tgcalls
 yt-dlp
-Flask
+flask
 python-dotenv
 motor
-flask
+
