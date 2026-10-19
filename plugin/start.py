@@ -24,8 +24,9 @@ async def start_cmd(client: Client, message: Message):
         [InlineKeyboardButton("➕ Add Me", url=f"http://t.me/Zoyahumusicbot?startgroup=true")]
     ])
 
-    await message.reply_text(text, reply_markup=keyboard, disable_web_page_preview=True)
+    await message.reply_text(text, reply_markup=keyboard)
 
 @Client.on_callback_query(filters.regex("^help$"))
 async def help_callback(client: Client, callback_query):
     await callback_query.answer("Commands: /play, /vplay, /playforce, /vplayforce", show_alert=True)
+    
