@@ -1,6 +1,7 @@
 import yt_dlp
 from pyrogram import Client, filters
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ChatMemberBanned
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pytgcalls.types import MediaStream
 # ✅ CHANGED: main ki jagah core se import kiya
@@ -41,7 +42,7 @@ async def play_cmd(client: Client, message: Message):
     # 2. Assistant Auto-Invite Logic
     try:
         member = await client.get_chat_member(chat_id, userbot.me.id)
-        if isinstance(member, ChatMemberBanned):
+        if member.status == ChatMemberStatus.BANNED:
             raise Exception("Banned")
     except UserNotParticipant:
         try:
@@ -69,7 +70,7 @@ async def play_cmd(client: Client, message: Message):
 
     # 4. Join VC and Stream
     try:
-        await call_py.join_group_call(
+        await call_py.play(
             chat_id,
             MediaStream(url)
         )
@@ -96,3 +97,4 @@ async def unban_assistant_cb(client: Client, callback_query):
         await callback_query.message.edit_text("✅ Assistant has been unbanned. Please try playing again.")
     except Exception as e:
         await callback_query.answer(f"Failed to unban: {e}", show_alert=True)
+        
