@@ -4,24 +4,25 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Telegram Bot Credentials
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8923638580:AAFefaYcgPOo9MycixwbD_KoJjTzRk2xXJk")
-API_ID = os.environ.get("API_ID", "") # Add your API_ID from my.telegram.org
-API_HASH = os.environ.get("API_HASH", "") # Add your API_HASH from my.telegram.org
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+API_ID = int(os.environ.get("API_ID", 0)) 
+API_HASH = os.environ.get("API_HASH", "")
 
 # Assistant Userbot (String Session) - Required for VC
-STRING_SESSION = os.environ.get("STRING_SESSION", "") 
+STRING_SESSION = os.environ.get("STRING_SESSION", "") # Dhyan rahe Railway me bhi yahi naam ho
 
 # Database
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", "")
 
 # Owner & Branding
-OWNER_ID = os.environ.get("OWNER_ID", "@Ownerbackk")
-BOT_LINK = os.environ.get("BOT_LINK", "http://t.me/Zoyahumusicbot")
+# Yahan apna Telegram User ID dalein (jaise 123456789), username nahi chalega
+OWNER_ID = int(os.environ.get("OWNER_ID", 0)) 
+BOT_LINK = os.environ.get("BOT_LINK", "https://t.me/Zoyahumusicbot")
 
-# Music API Keys
-YT_API_KEY = os.environ.get("YT_API_KEY", "AIzaSyCRlUmap-YG69wvj8H4Fm41F1Fnq35zeUk")
-SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "beb77e138e364a7eba4ba6ded1a59373")
-SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "5602c01fbc444866a094b54e73c783ad")
+# Music API Keys (Ise Railway Variables me dalein, yahan blank rakhein)
+YT_API_KEY = os.environ.get("YT_API_KEY", "")
+SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "")
+SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "")
 
 # Render Port
 PORT = int(os.environ.get("PORT", 8080))
