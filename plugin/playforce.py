@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from pytgcalls.types import MediaStream
 # ✅ CHANGED: main ki jagah core se import kiya
 from core import call_py, userbot
-from plugins.play import get_stream_url
+from plugin.play import get_stream_url
 
 @Client.on_message(filters.command(["playforce", "vplayforce"]) & filters.group)
 async def playforce_cmd(client: Client, message: Message):
@@ -22,11 +22,11 @@ async def playforce_cmd(client: Client, message: Message):
     try:
         # Leave current call to force a new one
         try:
-            await call_py.leave_group_call(chat_id)
+            await call_py.leave_call(chat_id)
         except:
             pass
             
-        await call_py.join_group_call(chat_id, MediaStream(url))
+        await call_py.play(chat_id, MediaStream(url))
         
         mins, secs = divmod(duration, 60)
         await msg.edit_text(
@@ -37,3 +37,4 @@ async def playforce_cmd(client: Client, message: Message):
         )
     except Exception as e:
         await msg.edit_text(f"❌ Playback Error: {e}")
+        
