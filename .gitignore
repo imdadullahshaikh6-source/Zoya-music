@@ -1,4 +1,12 @@
+# Secrets: kabhi GitHub par mat daalo
 .env
-*.session
 cookies.txt
+*.session
+*.session-journal
+
+# Runtime
 venv/
+__pycache__/
+*.pyc
+downloads/
+cache/
