@@ -46,7 +46,7 @@ BOT_NAME = os.environ.get("BOT_NAME", "𝘇𝗼𝘆𝗮")
 BOT_LINK = os.environ.get("BOT_LINK", "https://t.me/Zoyahumusicbot")
 START_IMG = os.environ.get(
     "START_IMG",
-    "https://i.ibb.co/LX6d0jnG/AND-THE-NEWS-THAT-THE-WORLD-ME-WAS-WAITING-FOR-F4-CK-21-ST-CENTURY-DELUXE-EDITION-Official-cove.jpg",
+    "https://i.ibb.co/BV4wN6pT/cc8d0ef2-6c1c-4f1d-945a-f6f091af0d2c.jpg",
 )
 SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", "")        # e.g. https://t.me/yourgroup
 UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "")  # e.g. https://t.me/yourchannel
