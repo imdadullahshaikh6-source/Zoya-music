@@ -55,7 +55,7 @@ OWNER_USERNAME = (os.environ.get("OWNER_USERNAME") or ("" if OWNER_ID else _raw_
 # ── Branding / links ────────────────────────────────────────────────────
 BOT_NAME = os.environ.get("BOT_NAME", "𝘇𝗼𝘆𝗮")
 BOT_LINK = os.environ.get("BOT_LINK", "https://t.me/Zoyahumusicbot")
-_DEFAULT_START_IMG = "https://i.ibb.co/BV4wN6pT/cc8d0ef2-6c1c-4f1d-945a-f6f091af0d2c.jpg"
+_DEFAULT_START_IMG = "https://i.ibb.co/s9fqHGmx/IMG-20261110-013545.jpg"
 # .env me START_IMG galat/HTML ho to bhi default direct link use hoga
 START_IMG = _img_url(os.environ.get("START_IMG", "")) or _DEFAULT_START_IMG
 SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", "")        # e.g. https://t.me/yourgroup
