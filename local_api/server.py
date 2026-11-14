@@ -12,6 +12,7 @@
 #   LOCAL_API_KEY=kuch-bhi-secret-string      # khaali chhodo to bina key ke chalega (localhost pe hi hai, phir bhi key rakhna behtar)
 import json
 import os
+import shutil
 import sys
 import threading
 import time
@@ -66,12 +67,19 @@ def _resolve(vid: str, video: bool) -> str:
             # audio thodi chhoti bitrate (<=96kbps) -> file chhoti -> download tez. VC me waise bhi
             # Telegram/Opus dobara compress karta hai, isliye kaan se farak nahi padta.
             fmt = "bestaudio[abr<=96]/bestaudio[filesize<10M]/bestaudio/best"
-        # fragments 16 parallel connections se utaro + bade progressive file ko bhi chunks me baanto
+        # aria2c: asli multi-connection download (16 connections ek file pe bhi) — concurrent_fragment_downloads
+        # sirf fragmented/DASH videos pe kaam karta hai, zyada YouTube files single-stream hoti hain, isliye
+        # external downloader hi sach me tez karta hai. aria2c na mile to khud-ba-khud normal tareeke pe chala jata hai.
         opts = ytdl._opts(
             format=fmt, outtmpl=outtmpl, skip_download=False,
             concurrent_fragment_downloads=16,
-            http_chunk_size=10 * 1024 * 1024,  # 10MB chunks -> bada file bhi multi-connection se
+            http_chunk_size=10 * 1024 * 1024,
         )
+        if shutil.which("aria2c"):
+            opts["external_downloader"] = "aria2c"
+            opts["external_downloader_args"] = {
+                "aria2c": ["-x", "16", "-s", "16", "-k", "1M", "--summary-interval=0"]
+            }
         with yt_dlp.YoutubeDL(opts) as ydl:
             ydl.download([url])
         hit = _cached(key)
