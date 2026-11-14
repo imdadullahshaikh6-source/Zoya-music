@@ -61,7 +61,11 @@ def _resolve(vid: str, video: bool) -> str:
         url = f"https://www.youtube.com/watch?v={vid}"
         fmt = ytdl.VIDEO_FMT if video else ytdl.AUDIO_FMT
         outtmpl = os.path.join(DEST_DIR, f"{key}.%(ext)s")
-        opts = ytdl._opts(format=fmt, outtmpl=outtmpl, skip_download=False)
+        # fragments ko ek-ek karke nahi, 8 parallel connections se utaro (khaaskar video me bada farak)
+        opts = ytdl._opts(
+            format=fmt, outtmpl=outtmpl, skip_download=False,
+            concurrent_fragment_downloads=8,
+        )
         with yt_dlp.YoutubeDL(opts) as ydl:
             ydl.download([url])
         hit = _cached(key)
@@ -113,4 +117,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-          
+    
