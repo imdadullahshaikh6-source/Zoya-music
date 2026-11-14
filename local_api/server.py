@@ -59,12 +59,18 @@ def _resolve(vid: str, video: bool) -> str:
         import yt_dlp
 
         url = f"https://www.youtube.com/watch?v={vid}"
-        fmt = ytdl.VIDEO_FMT if video else ytdl.AUDIO_FMT
         outtmpl = os.path.join(DEST_DIR, f"{key}.%(ext)s")
-        # fragments ko ek-ek karke nahi, 8 parallel connections se utaro (khaaskar video me bada farak)
+        if video:
+            fmt = ytdl.VIDEO_FMT  # quality yahi rehti hai (720p), sirf download tareeka tez
+        else:
+            # audio thodi chhoti bitrate (<=96kbps) -> file chhoti -> download tez. VC me waise bhi
+            # Telegram/Opus dobara compress karta hai, isliye kaan se farak nahi padta.
+            fmt = "bestaudio[abr<=96]/bestaudio[filesize<10M]/bestaudio/best"
+        # fragments 16 parallel connections se utaro + bade progressive file ko bhi chunks me baanto
         opts = ytdl._opts(
             format=fmt, outtmpl=outtmpl, skip_download=False,
-            concurrent_fragment_downloads=8,
+            concurrent_fragment_downloads=16,
+            http_chunk_size=10 * 1024 * 1024,  # 10MB chunks -> bada file bhi multi-connection se
         )
         with yt_dlp.YoutubeDL(opts) as ydl:
             ydl.download([url])
