@@ -148,7 +148,7 @@ def ended_caption(track: Track, played: int, reason: str) -> str:
         f"<blockquote>"
         f"<b>{sc('▣ title')}:</b> {link_title(track)}\n"
         f"<b>{sc('▣ duration')}:</b> <code>{fmt_played(played)} / {total}</code>\n"
-        f"• <b>{sc('▣ reason')}:</b> <i>{reason}</i>"
+        f"<b>{sc('▣ reason')}:</b> <i>{reason}</i>"
         f"</blockquote>"
     )
 
