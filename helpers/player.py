@@ -132,11 +132,11 @@ async def _play_err_text(chat_id: int, e: Exception) -> str:
 
 def now_caption(track: Track) -> str:
     return (
-        f"<blockquote><u>{sc('now streaming')}</u></blockquote>\n"
+        f"<blockquote><u>{sc('▣ now streaming')}</u></blockquote>\n"
         f"<blockquote>"
-        f"<b>{sc('title')}:</b> {link_title(track)}\n"
-        f"<b>{sc('duration')}:</b> <code>{fmt_time(track.duration) if track.duration else 'LIVE'}</code>\n"
-        f"<b>{sc('requested by')}:</b> {track.requester or sc('unknown')}"
+        f"<b>{sc('▣ title')}:</b> {link_title(track)}\n"
+        f"<b>{sc('▣ duration')}:</b> <code>{fmt_time(track.duration) if track.duration else 'LIVE'}</code>\n"
+        f"<b>{sc('▣ requested by')}:</b> {track.requester or sc('unknown')}"
         f"</blockquote>"
     )
 
@@ -144,11 +144,11 @@ def now_caption(track: Track) -> str:
 def ended_caption(track: Track, played: int, reason: str) -> str:
     total = fmt_time(track.duration) if track.duration else "LIVE"
     return (
-        f"<blockquote><u>{sc('stream completed')}</u></blockquote>\n"
+        f"<blockquote><u>{sc('▣ stream completed')}</u></blockquote>\n"
         f"<blockquote>"
-        f"<b>{sc('title')}:</b> {link_title(track)}\n"
-        f"<b>{sc('duration')}:</b> <code>{fmt_played(played)} / {total}</code>\n"
-        f"• <b>{sc('reason')}:</b> <i>{reason}</i>"
+        f"<b>{sc('▣ title')}:</b> {link_title(track)}\n"
+        f"<b>{sc('▣ duration')}:</b> <code>{fmt_played(played)} / {total}</code>\n"
+        f"• <b>{sc('▣ reason')}:</b> <i>{reason}</i>"
         f"</blockquote>"
     )
 
