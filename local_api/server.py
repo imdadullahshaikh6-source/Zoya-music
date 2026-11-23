@@ -52,6 +52,16 @@ def _js_opts() -> dict:
     return out
 
 
+def _yt_args(existing=None, **extra) -> dict:
+    """Pehle se set extractor_args ko udaye bina youtube ke andar player_js_variant=tv merge karta hai."""
+    ea = dict(existing or {})
+    yt = dict(ea.get("youtube") or {})
+    yt["player_js_variant"] = ["tv"]
+    yt.update(extra)
+    ea["youtube"] = yt
+    return ea
+
+
 def _lock_for(key: str) -> threading.Lock:
     with _guard:
         return _locks.setdefault(key, threading.Lock())
@@ -96,6 +106,9 @@ def _resolve(vid: str, video: bool) -> str:
             retries=3, fragment_retries=3, extractor_retries=2,
         )
         opts.update(_js_opts())
+        # YouTube ka "main" player JS solver me crash karta hai (addOnDisposeCallback error);
+        # "tv" variant wala player theek solve hota hai -> formats milte hain.
+        opts["extractor_args"] = _yt_args(opts.get("extractor_args"))
         # Audio 3-5 MB ki hoti hai -> yt-dlp ka apna downloader kaafi tez aur reliable hai.
         # aria2c (16 connections) logs me atak raha tha (213-237s ~ 4 x 60s timeout), isliye sirf video ke liye,
         # wo bhi kam connections + chhote timeouts ke saath.
@@ -117,7 +130,7 @@ def _resolve(vid: str, video: bool) -> str:
                     raise
                 print(f"[local-api] {key}: format nahi mila, alternate clients se dobara try")
                 opts2 = dict(opts)
-                opts2["extractor_args"] = {"youtube": {"player_client": ["tv", "android_vr", "web_safari"]}}
+                opts2["extractor_args"] = _yt_args(opts.get("extractor_args"), player_client=["tv", "web_embedded"])
                 with yt_dlp.YoutubeDL(opts2) as ydl:
                     ydl.download([url])
         hit = _cached(key)
@@ -173,4 +186,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-                                    
+    
