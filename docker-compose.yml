@@ -1,0 +1,22 @@
+services:
+  zoya:
+    build: .
+    image: zoya-music:latest
+    container_name: zoya
+    restart: unless-stopped
+    env_file: .env                      # secrets image me nahi jaate, bahar se lagte hain
+    environment:
+      COOKIES_FILE: /data/cookies.txt
+      TZ: Asia/Kolkata
+    volumes:
+      - ./data:/data                    # cookies.txt + bot session
+      - ./downloads:/app/downloads      # downloaded songs (cache)
+      - ./cache:/app/cache
+      - ./ytcache:/root/.cache/yt-dlp   # yt-dlp ka JS-solver cache: rebuild ke baad bhi pehla gaana tez
+    ports:
+      - "127.0.0.1:8080:8080"           # sirf VPS ke andar (health Flask); bahar kholna ho to "8080:8080"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
