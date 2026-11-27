@@ -1,0 +1,20 @@
+.git
+.gitignore
+venv/
+__pycache__/
+*.pyc
+downloads/
+cache/
+data/
+# secrets / purani files image me kabhi nahi
+.env
+.env.*
+!.env.example
+cookies*
+*.session
+*.session-journal
+*.log
+*.bak*
+*.broken
+*.old
+README.md
